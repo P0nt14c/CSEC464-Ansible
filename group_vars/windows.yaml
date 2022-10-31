@@ -1,0 +1,9 @@
+---
+ansible_connection: winrm
+ansible_psrp_cert_validation: ignore
+ansible_psrp_protocol: https
+ansible_psrp_auth: ntlm
+ansible_psrp_credssp_auth_mechanism: ntlm
+mecome_method: runas
+ansible_user: student 
+ansible_password: LabGroup3

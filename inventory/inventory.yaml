@@ -1,0 +1,17 @@
+
+linux:
+  hosts:
+    ubuntu-6462:
+      ansible_host: 192.168.201.70
+    
+windows:
+  hosts:
+    win10-0746:
+      ansible_host: 192.168.198.109
+    winserv2016-1764:
+      ansible_host: 192.168.199.7
+
+clients:
+  children:
+    linux:
+    windows:

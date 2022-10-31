@@ -1,0 +1,11 @@
+- name: windows install osquery
+  hosts: windows
+  tasks:
+   - windows_install_osquery
+  tags:
+   - never
+   - install_osquery
+   - windows
+
+
+# a file change
