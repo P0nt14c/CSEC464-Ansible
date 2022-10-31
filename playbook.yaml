@@ -1,6 +1,6 @@
 - name: windows install osquery
   hosts: windows
-  tasks:
+  roles:
    - windows_install_osquery
   tags:
    - never
@@ -8,4 +8,3 @@
    - windows
 
 
-# a file change
