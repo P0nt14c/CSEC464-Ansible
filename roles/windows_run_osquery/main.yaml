@@ -1,0 +1,8 @@
+- name: run osquery
+  ansible.builtin.script: ./files/osquery.sh
+
+
+- name: get results
+  ansible.builtin.fetch:
+    src: ~/LOG.TXT
+    dest: ~/LOG.TXT
