@@ -8,3 +8,29 @@
    - windows
 
 
+- name: linux install osquery
+  hosts: linux
+  roles:
+   - linux_install_osquery
+  tags:
+   - never
+   - install_osquery
+   - linux
+
+- name: windows osquery
+  hosts: windows
+  roles:
+    - windows_run_osquery
+  tags:
+    - never
+    - run_osquery
+    - windows
+
+- name: linux osquery
+  hosts: linux
+  roles:
+    - linux_run_osquery
+  tags:
+    - never
+    - run_osquery
+    - linux

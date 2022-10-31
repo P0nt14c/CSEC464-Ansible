@@ -5,5 +5,5 @@
 - name: get results
   ansible.builtin.fetch:
     src: ~/LOG.TXT
-    dest: ~/LOG.TXT
+    dest: ~/lin_LOG.TXT
 
