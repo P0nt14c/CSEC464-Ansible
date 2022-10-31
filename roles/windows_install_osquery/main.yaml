@@ -1,0 +1,52 @@
+- name: Install osquery package with chocolatey
+  win_chocolatey:
+    name: osquery
+
+
+- name: Configure osqueryd
+  win_template:
+    src: "{{ win_osquery_template }}"
+    dest: "{{ win_osquery_dir }}\\osquery.conf"
+  register: conf2
+  notify:
+    - Restart osqueryd
+
+
+- name: update osqueryd.exe path
+  win_template:
+    src: manage-osqueryd.ps1.j2
+    dest: "{{ win_osquery_dir }}\\manage-osqueryd.ps1"
+    backup: yes
+
+- name: Check if osquery windows event log installed
+  win_stat:
+    path: "{{ win_osquery_dir }}\\osquery_man_installed"
+  register: osquerymaninstalled
+- name: Win Event logger should be enabled
+  block:
+    - name: fixme! missing file in msi
+      win_copy:
+        src: osquery.man
+        dest: "{{ win_osquery_dir }}\\osquery.man"
+      when: win_osquery_url|string
+
+    - name: Enable Windows Event Log support
+      win_command: "wevtutil im \"{{ win_osquery_dir }}\\osquery.man\""
+      notify:
+        - Restart osqueryd
+
+- name: Osquery service enabled
+  block:
+    # https://github.com/ansible/ansible/issues/35661
+    - name: validate osqueryd config
+      win_command: >
+        "{{ win_osquery_dir }}\\osqueryi.exe" --config_path "{{ win_osquery_dir }}\\osquery.conf" \
+            --config_check --verbose
+      changed_when: false
+    - name: Install and start osqueryd service
+      win_shell: "{{ item }}"
+      with_items:
+        - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -install
+            -args '--flagfile \"{{ win_osquery_dir | regex_replace('^c:', '') }}\\osquery.flags\"'"
+        - "PowerShell.exe -ExecutionPolicy Bypass -File \"{{ win_osquery_dir }}\\manage-osqueryd.ps1\" -start"
+      failed_when: false

@@ -1,0 +1,13 @@
+win_osquery: true
+# win_osquery: false
+# win_osquery_dir: 'c:\ProgramData\osquery'
+win_osquery_dir: 'C:\Program Files\osquery'
+win_osquerydb_dir: 'C:\Program Files\osquery\osquery.db'
+win_osqueryd_service_enable: true
+win_osquery_template: 'osquery.conf.j2'
+win_osquery_flags_template: 'osquery.flags.j2'
+win_osquery_extra_flags: ''
+# log are only as EventData>Message in Details. No human-readable description for now
+win_osquery_logger_plugin: 'windows_event_log'
+win_eventlog_maxsize: 315801600
+win_eventlog_retention: 0

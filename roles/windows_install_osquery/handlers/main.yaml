@@ -1,0 +1,5 @@
+---
+- name: Restart osqueryd
+  win_service:
+    name: osquery daemon service
+    state: restarted
